@@ -632,12 +632,9 @@
             "doubleSided" : true,
             "name" : "Material.003",
             "pbrMetallicRoughness" : {
-                "baseColorFactor" : [
-                    0.8000000715255737,
-                    0,
-                    0.004838947672396898,
-                    1
-                ],
+                "baseColorTexture" : {
+                    "index" : 0
+                },
                 "metallicFactor" : 0,
                 "roughnessFactor" : 0.5
             }
@@ -657,6 +654,19 @@
                     "material" : 0
                 }
             ]
+        }
+    ],
+    "textures" : [
+        {
+            "sampler" : 0,
+            "source" : 0
+        }
+    ],
+    "images" : [
+        {
+            "mimeType" : "image/png",
+            "name" : "red",
+            "uri" : "red.png"
         }
     ],
     "accessors" : [
@@ -715,6 +725,12 @@
             "buffer" : 0,
             "byteLength" : 3936,
             "byteOffset" : 36736
+        }
+    ],
+    "samplers" : [
+        {
+            "magFilter" : 9729,
+            "minFilter" : 9987
         }
     ],
     "buffers" : [
