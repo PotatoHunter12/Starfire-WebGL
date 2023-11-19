@@ -1,0 +1,254 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.6.16",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0,
+                1,
+                2,
+                3,
+                5
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "name" : "Empty",
+            "rotation" : [
+                0.7071067094802856,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "scale" : [
+                13.818846702575684,
+                13.818846702575684,
+                13.818846702575684
+            ],
+            "translation" : [
+                21.055191040039062,
+                19.53710174560547,
+                -0.6553469300270081
+            ]
+        },
+        {
+            "name" : "Empty.001",
+            "rotation" : [
+                0.7071067094802856,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "scale" : [
+                13.818846702575684,
+                13.818846702575684,
+                13.818846702575684
+            ],
+            "translation" : [
+                21.055191040039062,
+                19.53710174560547,
+                -0.6553469300270081
+            ]
+        },
+        {
+            "name" : "Empty.002",
+            "rotation" : [
+                0.4999999403953552,
+                0.5000000596046448,
+                -0.4999999701976776,
+                0.5000000596046448
+            ],
+            "scale" : [
+                13.818846702575684,
+                13.818846702575684,
+                13.818846702575684
+            ],
+            "translation" : [
+                -15.464447021484375,
+                19.53710174560547,
+                2.415395736694336
+            ]
+        },
+        {
+            "mesh" : 0,
+            "name" : "Sphere",
+            "rotation" : [
+                0,
+                0,
+                -0.7071067094802856,
+                0.7071068286895752
+            ],
+            "scale" : [
+                1.9711514711380005,
+                1.9711514711380005,
+                1.9711514711380005
+            ],
+            "translation" : [
+                0.0030956268310546875,
+                37.11474609375,
+                4.941563129425049
+            ]
+        },
+        {
+            "camera" : 0,
+            "name" : "Camera_Orientation",
+            "rotation" : [
+                -0.7071067690849304,
+                0,
+                0,
+                0.7071067690849304
+            ]
+        },
+        {
+            "children" : [
+                4
+            ],
+            "name" : "Camera",
+            "rotation" : [
+                0,
+                0.7552818059921265,
+                -0.6554002165794373,
+                -3.3014416089827137e-08
+            ],
+            "scale" : [
+                3.683180093765259,
+                3.6831843852996826,
+                3.6831839084625244
+            ],
+            "translation" : [
+                0,
+                43.7088623046875,
+                -59.307655334472656
+            ]
+        }
+    ],
+    "cameras" : [
+        {
+            "name" : "Camera",
+            "perspective" : {
+                "aspectRatio" : 1.7777777777777777,
+                "yfov" : 0.39959652046304894,
+                "zfar" : 1000,
+                "znear" : 0.10000000149011612
+            },
+            "type" : "perspective"
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "name" : "Material.001",
+            "pbrMetallicRoughness" : {
+                "baseColorTexture" : {
+                    "index" : 0
+                },
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.5
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Sphere",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3,
+                    "material" : 0
+                }
+            ]
+        }
+    ],
+    "textures" : [
+        {
+            "sampler" : 0,
+            "source" : 0
+        }
+    ],
+    "images" : [
+        {
+            "mimeType" : "image/png",
+            "name" : "Material",
+            "uri" : "zhigga_basic.png"
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 2782,
+            "max" : [
+                18.5123291015625,
+                6.514418125152588,
+                2.0803775787353516
+            ],
+            "min" : [
+                -0.9511261582374573,
+                -6.514418125152588,
+                -1.4073117971420288
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 2782,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 2782,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5123,
+            "count" : 4482,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 33384,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 33384,
+            "byteOffset" : 33384
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 22256,
+            "byteOffset" : 66768
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 8964,
+            "byteOffset" : 89024
+        }
+    ],
+    "samplers" : [
+        {
+            "magFilter" : 9729,
+            "minFilter" : 9987
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 97988,
+            "uri" : "zhigga_basic.bin"
+        }
+    ]
+}
