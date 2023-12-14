@@ -6,6 +6,8 @@ import { UpdateSystem } from '../engine/systems/UpdateSystem.js';
 import { GLTFLoader } from '../engine/loaders/GLTFLoader.js';
 
 import { FirstPersonController } from '../engine/controllers/FirstPersonController.js';
+import { ThirdPersonController } from '../engine/controllers/ThirdPersonController.js';
+import { TurntableController } from '../engine/controllers/TurntableController.js';
 import { OrbitController } from '../engine/controllers/OrbitController.js';
 import { RotateAnimator } from '../engine/animators/RotateAnimator.js';
 import { LinearAnimator } from '../engine/animators/LinearAnimator.js';
@@ -28,15 +30,15 @@ const gltfLoader = new GLTFLoader();
 await gltfLoader.load('../Assets/Models/test-mapa/mapa.gltf');
 
 const playerLoader = new GLTFLoader();
-await playerLoader.load('../Assets/Models/test-clovek/clovek.gltf');
-const player = await playerLoader.loadNode("Cube");
+await playerLoader.load('../Assets/Models/zhigga-basic/zhigga_basic.gltf');
+const player = await playerLoader.loadNode("Sphere");
 
 const scene = await gltfLoader.loadScene(gltfLoader.defaultScene);
 const playerScene = await playerLoader.loadScene(playerLoader.defaultScene);
 const camera = await playerScene.find(node => node.getComponentOfType(Camera));
 
-const comp = new FirstPersonController(player,canvas,camera)
-player.addComponent(comp);
+
+player.addComponent(new ThirdPersonController(camera, canvas));
 scene.addChild(player)
 
 const light = new Node();
