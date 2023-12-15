@@ -8,7 +8,6 @@
         {
             "name" : "Scene",
             "nodes" : [
-                0,
                 2,
                 23
             ]
@@ -16,6 +15,41 @@
     ],
     "nodes" : [
         {
+            "camera" : 0,
+            "name" : "Camera_Orientation",
+            "rotation" : [
+                -0.7071067690849304,
+                0,
+                0,
+                0.7071067690849304
+            ]
+        },
+        {
+            "children" : [
+                0
+            ],
+            "name" : "Camera",
+            "rotation" : [
+                -0.534064769744873,
+                0.5340649485588074,
+                -0.4634379744529724,
+                0.46343788504600525
+            ],
+            "scale" : [
+                1.8685438632965088,
+                1.8685460090637207,
+                1.8685457706451416
+            ],
+            "translation" : [
+                3.6094350814819336,
+                0,
+                0
+            ]
+        },
+        {
+            "children" : [
+                1
+            ],
             "mesh" : 0,
             "name" : "Zhigga_standing",
             "rotation" : [
@@ -32,38 +66,6 @@
             "translation" : [
                 0,
                 37.11474609375,
-                0
-            ]
-        },
-        {
-            "camera" : 0,
-            "name" : "Camera_Orientation",
-            "rotation" : [
-                -0.7071067690849304,
-                0,
-                0,
-                0.7071067690849304
-            ]
-        },
-        {
-            "children" : [
-                1
-            ],
-            "name" : "Camera",
-            "rotation" : [
-                0,
-                0.7552818059921265,
-                -0.6554002165794373,
-                -3.3014416089827137e-08
-            ],
-            "scale" : [
-                3.683180093765259,
-                3.6831843852996826,
-                3.6831839084625244
-            ],
-            "translation" : [
-                0,
-                30,
                 0
             ]
         },
@@ -509,8 +511,8 @@
     "images" : [
         {
             "mimeType" : "image/png",
-            "name" : "Material",
-            "uri" : "Material.png"
+            "name" : "zhigga_basic",
+            "uri" : "zhigga_basic.png"
         }
     ],
     "accessors" : [
