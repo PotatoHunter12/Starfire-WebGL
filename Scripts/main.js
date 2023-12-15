@@ -27,7 +27,7 @@ const renderer = new Renderer(canvas);
 renderer.initialize();
 
 const gltfLoader = new GLTFLoader();
-await gltfLoader.load('../Assets/Models/test-mapa/mapa.gltf');
+await gltfLoader.load('../Assets/Models/mapa/Proluxiraz.gltf');
 
 const playerLoader = new GLTFLoader();
 await playerLoader.load('../Assets/Models/zhigga-basic/zhigga_basic_standing.gltf');

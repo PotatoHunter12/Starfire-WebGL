@@ -10,14 +10,14 @@ import {
 export class ThirdPersonController {
 
     constructor(player, node, domElement, {
-        pitch = 0,
+        pitch = -1.75,
         yaw = 0,
         velocity = [0, 0, 0],
         acceleration = 50,
         maxSpeed = 20,
-        decay = 0.99999,
-        pointerSensitivity = 0.004,
-        rotation = [ -0.7,0, 0, 0.7 ]
+        decay = 0.9999999,
+        pointerSensitivity = 0.002,
+        rotation = [ 0,0, -0.7, 0.7 ]
     } = {}) {
         this.player = player;
         this.target = this.player.getComponentOfType(Transform);
@@ -34,7 +34,6 @@ export class ThirdPersonController {
         this.camV = [0,0,0]
         this.rotation = rotation
         this.rotation2 = this.target.rotation
-        console.log(this.rotation2);
 
         this.velocity = velocity;
         this.acceleration = acceleration;
@@ -71,9 +70,8 @@ export class ThirdPersonController {
         // Calculate forward and right vectors.
         const cos = Math.cos(this.yaw);
         const sin = Math.sin(this.yaw);
-        const forward = [sin, 0, cos];
-        const right = [cos, 0, -sin];
-        console.log(forward);
+        const forward = [-sin, 0, cos];
+        const right = [-cos, 0, -sin];
 
         // Map user input to the acceleration vector.
         const acc = vec3.create();
@@ -90,10 +88,10 @@ export class ThirdPersonController {
             vec3.sub(acc, acc, right);
         }
         if(this.keys['Space']){
-            vec3.add(acc,acc,[0,10,0])
+            vec3.add(acc,acc,[0,1,0])
         }
         if(this.keys['ShiftLeft']){
-            vec3.add(acc,acc,[0,-10,0])
+            vec3.add(acc,acc,[0,-1,0])
         }
 
         // Update velocity based on acceleration.
@@ -133,15 +131,21 @@ export class ThirdPersonController {
     pointermoveHandler(e) {
         const dx = e.movementX;
         const dy = e.movementY;
+
+        this.pitch -= dy * this.pointerSensitivity;
+        this.yaw   -= dx * this.pointerSensitivity;
+
         const twopi = Math.PI * 2;
+        const minpi = -Math.PI / 2.4;
 
-        this.yaw += dx * this.pointerSensitivity;
+        this.pitch = Math.min(Math.max(this.pitch, -Math.PI), minpi);
         this.yaw = ((this.yaw % twopi) + twopi) % twopi;
+        console.log(this.pitch);
 
-        quat.rotateX(this.rotation, this.rotation, -dy * this.pointerSensitivity);
-        quat.rotateX(this.rotation2, this.rotation2, -dx * this.pointerSensitivity)
-        //quat.normalize(this.rotation, this.rotation);
-        quat.normalize(this.rotation2, this.rotation2);
+        this.rotation = quat.create()
+        this.rotation2 = [ 0,0, -0.7, 0.7 ]
+        quat.rotateX(this.rotation, this.rotation, this.pitch);
+        quat.rotateX(this.rotation2, this.rotation2, this.yaw)
         
     }
 
