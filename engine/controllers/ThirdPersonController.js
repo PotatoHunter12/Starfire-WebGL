@@ -1,25 +1,40 @@
 import { quat, vec3, mat4 } from '../../../lib/gl-matrix-module.js';
 
-import { Transform } from '../core/Transform.js';
+import {
+    Camera,
+    Model,
+    Node,
+    Transform,
+} from '../core.js';
 
 export class ThirdPersonController {
 
-    constructor(node, domElement, {
+    constructor(player, node, domElement, {
         pitch = 0,
         yaw = 0,
         velocity = [0, 0, 0],
         acceleration = 50,
-        maxSpeed = 5,
+        maxSpeed = 20,
         decay = 0.99999,
-        pointerSensitivity = 0.002,
+        pointerSensitivity = 0.004,
+        rotation = [ -0.7,0, 0, 0.7 ]
     } = {}) {
-        this.node = node;
-        this.domElement = domElement;
+        this.player = player;
+        this.target = this.player.getComponentOfType(Transform);
+
+        vec3.copy(this.target,this.target.translation)
+
+        this.node = node
+        this.domElement = domElement
 
         this.keys = {};
 
         this.pitch = pitch;
         this.yaw = yaw;
+        this.camV = [0,0,0]
+        this.rotation = rotation
+        this.rotation2 = this.target.rotation
+        console.log(this.rotation2);
 
         this.velocity = velocity;
         this.acceleration = acceleration;
@@ -56,22 +71,29 @@ export class ThirdPersonController {
         // Calculate forward and right vectors.
         const cos = Math.cos(this.yaw);
         const sin = Math.sin(this.yaw);
-        const forward = [-sin, 0, -cos];
+        const forward = [sin, 0, cos];
         const right = [cos, 0, -sin];
+        console.log(forward);
 
         // Map user input to the acceleration vector.
         const acc = vec3.create();
-        if (this.keys['KeyW']) {
+        if (this.keys['KeyW'] || this.keys['ArrowUp']) {
             vec3.add(acc, acc, forward);
         }
-        if (this.keys['KeyS']) {
+        if (this.keys['KeyS'] || this.keys['ArrowDown']) {
             vec3.sub(acc, acc, forward);
         }
-        if (this.keys['KeyD']) {
+        if (this.keys['KeyD'] || this.keys['ArrowRight']) {
             vec3.add(acc, acc, right);
         }
-        if (this.keys['KeyA']) {
+        if (this.keys['KeyA'] || this.keys['ArrowLeft']) {
             vec3.sub(acc, acc, right);
+        }
+        if(this.keys['Space']){
+            vec3.add(acc,acc,[0,10,0])
+        }
+        if(this.keys['ShiftLeft']){
+            vec3.add(acc,acc,[0,-10,0])
         }
 
         // Update velocity based on acceleration.
@@ -93,32 +115,34 @@ export class ThirdPersonController {
             vec3.scale(this.velocity, this.velocity, this.maxSpeed / speed);
         }
 
-        const transform = this.node.getComponentOfType(Transform);
-        if (transform) {
-            // Update translation based on velocity.
-            vec3.scaleAndAdd(transform.translation,
-                transform.translation, this.velocity, dt);
+        const transform = this.player.getComponentOfType(Transform);
+        const camTransform = this.node.getComponentOfType(Transform);
+        transform.scale = [0.8,0.8,0.8]
+        
+        if (transform && camTransform) {
+            quat.copy(transform.rotation, this.rotation2)
+            quat.copy(camTransform.rotation, this.rotation);
 
-            // Update rotation based on the Euler angles.
-            const rotation = quat.create();
-            quat.rotateY(rotation, rotation, this.yaw);
-            quat.rotateX(rotation, rotation, this.pitch);
-            transform.rotation = rotation;
+            vec3.transformQuat(camTransform.translation, [0,0,50], this.rotation);
+
+            vec3.scaleAndAdd(transform.translation, transform.translation, this.velocity, dt);
+            
         }
     }
 
     pointermoveHandler(e) {
         const dx = e.movementX;
         const dy = e.movementY;
-
-        this.pitch -= dy * this.pointerSensitivity;
-        this.yaw   -= dx * this.pointerSensitivity;
-
         const twopi = Math.PI * 2;
-        const halfpi = Math.PI / 2;
 
-        this.pitch = Math.min(Math.max(this.pitch, -halfpi), halfpi);
+        this.yaw += dx * this.pointerSensitivity;
         this.yaw = ((this.yaw % twopi) + twopi) % twopi;
+
+        quat.rotateX(this.rotation, this.rotation, -dy * this.pointerSensitivity);
+        quat.rotateX(this.rotation2, this.rotation2, -dx * this.pointerSensitivity)
+        //quat.normalize(this.rotation, this.rotation);
+        quat.normalize(this.rotation2, this.rotation2);
+        
     }
 
     keydownHandler(e) {
