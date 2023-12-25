@@ -23,7 +23,7 @@ export class ThirdPersonController {
     } = {}) {
         this.player = player;
         this.target = this.player.getComponentOfType(Transform);
-        this.target.translation = [0,23.8,0]
+        this.target.translation = [0,23.75,0]
         vec3.copy(this.target,this.target.translation)
 
         this.node = node
@@ -104,8 +104,8 @@ export class ThirdPersonController {
         if(!this.isGrounded){
             vec3.sub(acc,acc,[0,1.5,0])
             console.log(transform.translation);
-            if(transform.translation[1] < 23.8){
-                transform.translation[1] = 23.8
+            if(transform.translation[1] < 23.75){
+                transform.translation[1] = 23.75 
                 acc[1] = 0
                 this.velocity[1] = 0
                 this.isGrounded = true
