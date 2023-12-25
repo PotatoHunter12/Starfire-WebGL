@@ -28,13 +28,17 @@ renderer.initialize();
 
 const gltfLoader = new GLTFLoader();
 await gltfLoader.load('../Assets/Models/mapa/Proluxiraz.gltf');
+const scene = await gltfLoader.loadScene(gltfLoader.defaultScene);
 
 const playerLoader = new GLTFLoader();
 await playerLoader.load('../Assets/Models/zhigga-basic/zhigga_basic_standing.gltf');
+const playerScene = await playerLoader.loadScene(playerLoader.defaultScene);
 
 const player = await playerLoader.loadNode("Zhigga_standing");
-const scene = await gltfLoader.loadScene(gltfLoader.defaultScene);
-const playerScene = await playerLoader.loadScene(playerLoader.defaultScene);
+
+// const camera = await scene.find(node => node.getComponentOfType(Camera));
+// camera.addComponent(new OrbitController(camera,canvas))
+// scene.addChild(camera)
 
 const camera = await playerScene.find(node => node.getComponentOfType(Camera));
 player.addComponent(new ThirdPersonController(player, camera, canvas));
