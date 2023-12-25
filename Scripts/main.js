@@ -42,6 +42,7 @@ const player = await playerLoader.loadNode("Zhigga_standing");
 
 const camera = await playerScene.find(node => node.getComponentOfType(Camera));
 player.addComponent(new ThirdPersonController(player, camera, canvas));
+
 scene.addChild(player)
 
 const light = new Node();
@@ -49,7 +50,7 @@ light.addComponent(new Transform({
     translation: [-100, 200, 3],
 }));
 light.addComponent(new Light({
-    ambient: 0.3,
+    ambient: 0.1,
 }));
 scene.addChild(light);
 

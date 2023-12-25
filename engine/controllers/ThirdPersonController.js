@@ -10,18 +10,20 @@ import {
 export class ThirdPersonController {
 
     constructor(player, node, domElement, {
-        pitch = -1.75,
+        pitch = -1.5,
         yaw = 0,
         velocity = [0, 0, 0],
         acceleration = 50,
         maxSpeed = 20,
         decay = 0.9999999,
-        pointerSensitivity = 0.002,
-        rotation = [ 0,0, -0.7, 0.7 ]
+        pointerSensitivity = 0.001,
+        rotation = [ -0.7,0, 0, 0.7 ],
+        damage = 20,
+        health = 100,
     } = {}) {
         this.player = player;
         this.target = this.player.getComponentOfType(Transform);
-
+        this.target.translation = [0,23.8,0]
         vec3.copy(this.target,this.target.translation)
 
         this.node = node
@@ -31,7 +33,6 @@ export class ThirdPersonController {
 
         this.pitch = pitch;
         this.yaw = yaw;
-        this.camV = [0,0,0]
         this.rotation = rotation
         this.rotation2 = this.target.rotation
 
@@ -40,6 +41,10 @@ export class ThirdPersonController {
         this.maxSpeed = maxSpeed;
         this.decay = decay;
         this.pointerSensitivity = pointerSensitivity;
+        this.isGrounded = true
+
+        this.damage = damage
+        this.health = health
 
         this.initHandlers();
     }
@@ -67,6 +72,8 @@ export class ThirdPersonController {
     }
 
     update(t, dt) {
+        const transform = this.player.getComponentOfType(Transform);
+        const camTransform = this.node.getComponentOfType(Transform);
         // Calculate forward and right vectors.
         const cos = Math.cos(this.yaw);
         const sin = Math.sin(this.yaw);
@@ -88,15 +95,27 @@ export class ThirdPersonController {
             vec3.sub(acc, acc, right);
         }
         if(this.keys['Space']){
-            vec3.add(acc,acc,[0,1,0])
+            vec3.add(acc,acc,[0,4,0])
+            this.isGrounded = false
         }
         if(this.keys['ShiftLeft']){
-            vec3.add(acc,acc,[0,-1,0])
+            this.maxSpeed = 5
+        }
+        if(!this.isGrounded){
+            vec3.sub(acc,acc,[0,1.5,0])
+            console.log(transform.translation);
+            if(transform.translation[1] < 23.8){
+                transform.translation[1] = 23.8
+                acc[1] = 0
+                this.velocity[1] = 0
+                this.isGrounded = true
+                console.log("aaaaa");
+            }
         }
 
         // Update velocity based on acceleration.
         vec3.scaleAndAdd(this.velocity, this.velocity, acc, dt * this.acceleration);
-
+        
         // If there is no user input, apply decay.
         if (!this.keys['KeyW'] &&
             !this.keys['KeyS'] &&
@@ -104,7 +123,13 @@ export class ThirdPersonController {
             !this.keys['KeyA'])
         {
             const decay = Math.exp(dt * Math.log(1 - this.decay));
-            vec3.scale(this.velocity, this.velocity, decay);
+            this.velocity[0] *= decay
+            this.velocity[2] *= decay
+        }
+        
+
+        if (!this.keys['ShiftLeft']){
+            this.maxSpeed = 20
         }
 
         // Limit speed to prevent accelerating to infinity and beyond.
@@ -112,10 +137,6 @@ export class ThirdPersonController {
         if (speed > this.maxSpeed) {
             vec3.scale(this.velocity, this.velocity, this.maxSpeed / speed);
         }
-
-        const transform = this.player.getComponentOfType(Transform);
-        const camTransform = this.node.getComponentOfType(Transform);
-        transform.scale = [0.8,0.8,0.8]
         
         if (transform && camTransform) {
             quat.copy(transform.rotation, this.rotation2)
@@ -140,7 +161,7 @@ export class ThirdPersonController {
 
         this.pitch = Math.min(Math.max(this.pitch, -Math.PI), minpi);
         this.yaw = ((this.yaw % twopi) + twopi) % twopi;
-        console.log(this.pitch);
+        console.log(this.pitch,this.yaw,this.rotation);
 
         this.rotation = quat.create()
         this.rotation2 = [ 0,0, -0.7, 0.7 ]
