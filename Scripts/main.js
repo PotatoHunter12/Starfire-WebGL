@@ -38,10 +38,9 @@ const player = await playerLoader.loadNode("Zhigga_standing");
 const enemyLoader = new GLTFLoader()
 await enemyLoader.load('../Assets/Models/monsters/ghost_walking.gltf')
 const enemy = await enemyLoader.loadNode("ghost")
+
 const cape = await enemyLoader.loadNode("cape")
-
 enemy.addChild(cape)
-
 
 for (let i = 0; i < 100; i++) {
     const nme = enemy.clone()
@@ -60,7 +59,7 @@ light.addComponent(new Transform({
     translation: [-100, 200, 3],
 }));
 light.addComponent(new Light({
-    ambient: 0.1,
+    ambient: 0.2,
 }));
 scene.addChild(light);
 
