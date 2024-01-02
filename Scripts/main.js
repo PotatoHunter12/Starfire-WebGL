@@ -5,12 +5,12 @@ import { UpdateSystem } from '../engine/systems/UpdateSystem.js';
 
 import { GLTFLoader } from '../engine/loaders/GLTFLoader.js';
 
-import { FirstPersonController } from '../engine/controllers/FirstPersonController.js';
-import { ThirdPersonController } from '../engine/controllers/ThirdPersonController.js';
-import { TurntableController } from '../engine/controllers/TurntableController.js';
-import { OrbitController } from '../engine/controllers/OrbitController.js';
-import { RotateAnimator } from '../engine/animators/RotateAnimator.js';
-import { LinearAnimator } from '../engine/animators/LinearAnimator.js';
+import {
+    FirstPersonController,
+    ThirdPersonController,
+    EnemyController,
+    OrbitController
+} from '../engine/controllers/controllers.js'
 
 import {
     Camera,
@@ -33,12 +33,22 @@ const scene = await gltfLoader.loadScene(gltfLoader.defaultScene);
 const playerLoader = new GLTFLoader();
 await playerLoader.load('../Assets/Models/zhigga-basic/zhigga_basic_standing.gltf');
 const playerScene = await playerLoader.loadScene(playerLoader.defaultScene);
-
 const player = await playerLoader.loadNode("Zhigga_standing");
 
-// const camera = await scene.find(node => node.getComponentOfType(Camera));
-// camera.addComponent(new OrbitController(camera,canvas))
-// scene.addChild(camera)
+const enemyLoader = new GLTFLoader()
+await enemyLoader.load('../Assets/Models/monsters/ghost_walking.gltf')
+const enemy = await enemyLoader.loadNode("ghost")
+const cape = await enemyLoader.loadNode("cape")
+
+enemy.addChild(cape)
+
+
+for (let i = 0; i < 100; i++) {
+    const nme = enemy.clone()
+    nme.addComponent(new EnemyController(nme,player,canvas))
+    scene.addChild(nme)
+    
+}
 
 const camera = await playerScene.find(node => node.getComponentOfType(Camera));
 player.addComponent(new ThirdPersonController(player, camera, canvas));

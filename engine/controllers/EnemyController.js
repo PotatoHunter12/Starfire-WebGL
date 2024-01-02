@@ -22,11 +22,22 @@ export class EnemyController {
         this.velocity = velocity
         this.acceleration = acceleration
         this.maxSpeed = maxSpeed
+        this.distance
         
         this.damage = damage
         this.health = health
+        this.start = [Math.random()*100-50,21,Math.random()*100-50]
 
+        this.init()
+    }
+    init() {
+    }
 
+    update(t, dt) {
+        const transform = this.node.getComponentOfType(Transform);
+        const target = this.player.getComponentOfType(Transform);
 
+        transform.translation = this.start
+        transform.rotation = [0, -0.7, 0, 0.7]
     }
 }

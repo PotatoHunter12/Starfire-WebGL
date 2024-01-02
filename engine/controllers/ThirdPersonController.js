@@ -21,6 +21,7 @@ export class ThirdPersonController {
         damage = 20,
         health = 100,
     } = {}) {
+        this.view = 50
         this.player = player;
         this.target = this.player.getComponentOfType(Transform);
         this.target.translation = [0,23.75,0]
@@ -30,6 +31,7 @@ export class ThirdPersonController {
         this.domElement = domElement
 
         this.keys = {};
+        this.locked = {}
 
         this.pitch = pitch;
         this.yaw = yaw;
@@ -94,22 +96,24 @@ export class ThirdPersonController {
         if (this.keys['KeyA'] || this.keys['ArrowLeft']) {
             vec3.sub(acc, acc, right);
         }
-        if(this.keys['Space']){
-            vec3.add(acc,acc,[0,4,0])
+        if(this.keys['Space'] && this.isGrounded){
+            vec3.add(acc,acc,[0,200,0])
             this.isGrounded = false
         }
         if(this.keys['ShiftLeft']){
             this.maxSpeed = 5
         }
+        if(this.keys['KeyM'] && !this.locked['KeyM']){
+            this.view *= this.view == 5000 ? 0.01 : 10
+            this.locked['KeyM'] = true
+        }
         if(!this.isGrounded){
             vec3.sub(acc,acc,[0,1.5,0])
-            console.log(transform.translation);
             if(transform.translation[1] < 23.75){
                 transform.translation[1] = 23.75 
                 acc[1] = 0
                 this.velocity[1] = 0
                 this.isGrounded = true
-                console.log("aaaaa");
             }
         }
 
@@ -142,7 +146,7 @@ export class ThirdPersonController {
             quat.copy(transform.rotation, this.rotation2)
             quat.copy(camTransform.rotation, this.rotation);
 
-            vec3.transformQuat(camTransform.translation, [0,0,50], this.rotation);
+            vec3.transformQuat(camTransform.translation, [0,0,this.view], this.rotation);
 
             vec3.scaleAndAdd(transform.translation, transform.translation, this.velocity, dt);
             
@@ -161,7 +165,6 @@ export class ThirdPersonController {
 
         this.pitch = Math.min(Math.max(this.pitch, -Math.PI), minpi);
         this.yaw = ((this.yaw % twopi) + twopi) % twopi;
-        console.log(this.pitch,this.yaw,this.rotation);
 
         this.rotation = quat.create()
         this.rotation2 = [ 0,0, -0.7, 0.7 ]
@@ -176,6 +179,7 @@ export class ThirdPersonController {
 
     keyupHandler(e) {
         this.keys[e.code] = false;
+        this.locked[e.code] = false
     }
 
 }

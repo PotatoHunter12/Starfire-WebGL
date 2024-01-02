@@ -36,7 +36,7 @@ export class Renderer extends BaseRenderer {
             },
         });
 
-        gl.clearColor(1, 1, 1, 1);
+        gl.clearColor(0,0,0,0);
         gl.enable(gl.DEPTH_TEST);
         gl.enable(gl.CULL_FACE);
     }

@@ -65,5 +65,12 @@ export class Node {
     getComponentsOfType(type) {
         return this.components.filter(component => component instanceof type);
     }
+    clone() {
+        const newnode = new Node();
+        newnode.children = this.children.map(child => child.clone());
+        newnode.parent = this.parent;
+        this.components.map(component => newnode.addComponent(Object.assign(Object.create(Object.getPrototypeOf(component)), component)));
+        return newnode
+    }
 
 }
