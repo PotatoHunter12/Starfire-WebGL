@@ -159,12 +159,13 @@ export class ThirdPersonController {
 
         this.pitch -= dy * this.pointerSensitivity;
         this.yaw   -= dx * this.pointerSensitivity;
-
+        
         const twopi = Math.PI * 2;
         const minpi = -Math.PI / 2.4;
 
         this.pitch = Math.min(Math.max(this.pitch, -Math.PI), minpi);
         this.yaw = ((this.yaw % twopi) + twopi) % twopi;
+        
 
         this.rotation = quat.create()
         this.rotation2 = [ 0,0, -0.7, 0.7 ]

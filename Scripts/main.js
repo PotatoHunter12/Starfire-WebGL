@@ -42,7 +42,7 @@ const enemy = await enemyLoader.loadNode("ghost")
 const cape = await enemyLoader.loadNode("cape")
 enemy.addChild(cape)
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 1; i++) {
     const nme = enemy.clone()
     nme.addComponent(new EnemyController(nme,player,canvas))
     scene.addChild(nme)

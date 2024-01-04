@@ -40,13 +40,22 @@ export class EnemyController {
         this.target = this.player.getComponentOfType(Transform)
 
         this.transform.translation = [Math.random()*700-350,21,Math.random()*700-350]
+        //this.transform.translation = [Math.random()*10,21,Math.random()*10]
     }
 
     update(t, dt) {
         this.distance = vec3.distance(this.target.translation, this.transform.translation)
 
+        const twopi = Math.PI * 2;
+        const halfpi = Math.PI / 2;
+
         const forward = vec3.sub(vec3.create(),this.target.translation, this.transform.translation)
         forward[1] = 0
+
+        this.angle = ((Math.atan2(forward[2],forward[0]) / Math.PI) + 1) * Math.PI
+        this.angle = -((this.angle % twopi) + twopi) % twopi - halfpi
+
+        
 
         let acc = vec3.create();
         if (this.distance < 300 && this.distance > 5) {
@@ -68,6 +77,10 @@ export class EnemyController {
         }
 
         vec3.scaleAndAdd(this.transform.translation, this.transform.translation, this.velocity, dt);
+        
+        const rotation = quat.create()
+        quat.rotateY(rotation,rotation,this.angle)
+        quat.copy(this.transform.rotation,rotation)
         
     }
 }
