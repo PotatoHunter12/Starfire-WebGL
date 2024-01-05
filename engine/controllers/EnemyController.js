@@ -11,7 +11,7 @@ export class EnemyController {
         velocity = [0, 0, 0],
         acceleration = 50,
         decay = 0.9999999,
-        maxSpeed = 5,
+        maxSpeed = 4,
         damage = 10,
         health = 100,
     } = {}) {
@@ -39,32 +39,33 @@ export class EnemyController {
         this.transform = this.node.getComponentOfType(Transform)
         this.target = this.player.getComponentOfType(Transform)
 
+        // spawn enemy at random location
         this.transform.translation = [Math.random()*700-350,21,Math.random()*700-350]
-        //this.transform.translation = [Math.random()*10,21,Math.random()*10]
     }
 
     update(t, dt) {
         this.distance = vec3.distance(this.target.translation, this.transform.translation)
 
-        const twopi = Math.PI * 2;
-        const halfpi = Math.PI / 2;
-
         const forward = vec3.sub(vec3.create(),this.target.translation, this.transform.translation)
         forward[1] = 0
+
+        const twopi = Math.PI * 2;
+        const halfpi = Math.PI / 2;
 
         this.angle = ((Math.atan2(forward[2],forward[0]) / Math.PI) + 1) * Math.PI
         this.angle = -((this.angle % twopi) + twopi) % twopi - halfpi
 
-        
-
+        // follow player
         let acc = vec3.create();
-        if (this.distance < 300 && this.distance > 5) {
+        if (this.distance < 300 && this.distance > 3.2) {
             vec3.add(acc, acc, forward)
         }
         else {
             this.velocity = [0,0,0]
             acc = [0,0,0]
         }
+
+        // make sure enemy doesnt start drifting
         const decay = Math.exp(dt * Math.log(1 - this.decay));
         this.velocity[0] *= decay
         this.velocity[2] *= decay
@@ -76,11 +77,11 @@ export class EnemyController {
             vec3.scale(this.velocity, this.velocity, this.maxSpeed / speed);
         }
 
-        vec3.scaleAndAdd(this.transform.translation, this.transform.translation, this.velocity, dt);
-        
-        const rotation = quat.create()
-        quat.rotateY(rotation,rotation,this.angle)
-        quat.copy(this.transform.rotation,rotation)
+        // move
+        vec3.scaleAndAdd(this.transform.translation, this.transform.translation, this.velocity, dt)
+
+        // rotate
+        this.transform.rotation = quat.rotateY(quat.create(),quat.create(),this.angle)
         
     }
 }

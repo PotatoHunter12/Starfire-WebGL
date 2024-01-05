@@ -69,13 +69,10 @@ export class Node {
         const newnode = new Node();
         newnode.children = this.children.map(child => child.clone());
         newnode.parent = this.parent;
-        console.log("a");
-        this.components.forEach(component => {
-            const copy = {...component}
-            console.log(copy);
-            newnode.addComponent(Object.assign(Object.create(Object.getPrototypeOf(component)), copy))
-        });
-        return newnode
+        this.components.map(component =>
+            newnode.addComponent(Object.assign(Object.create(Object.getPrototypeOf(component)), component))
+        );
+        return newnode;
     }
 
 }

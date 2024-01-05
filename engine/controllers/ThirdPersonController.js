@@ -166,7 +166,7 @@ export class ThirdPersonController {
         this.pitch = Math.min(Math.max(this.pitch, -Math.PI), minpi);
         this.yaw = ((this.yaw % twopi) + twopi) % twopi;
         
-
+        // rotate the camera and then the whole player
         this.rotation = quat.create()
         this.rotation2 = [ 0,0, -0.7, 0.7 ]
         quat.rotateX(this.rotation, this.rotation, this.pitch);
