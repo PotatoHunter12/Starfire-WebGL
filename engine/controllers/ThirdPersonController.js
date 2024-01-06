@@ -6,10 +6,11 @@ import {
     Node,
     Transform,
 } from '../core.js';
+import { EnemyController } from './EnemyController.js';
 
 export class ThirdPersonController {
 
-    constructor(player, node, domElement, {
+    constructor(player, enemies, scene, node, domElement, {
         pitch = -1.5,
         yaw = 0,
         velocity = [0, 0, 0],
@@ -20,6 +21,7 @@ export class ThirdPersonController {
         rotation = [ -0.7,0, 0, 0.7 ],
         damage = 20,
         health = 100,
+        range = 4,
     } = {}) {
         this.view = 50
         this.player = player;
@@ -28,10 +30,13 @@ export class ThirdPersonController {
         vec3.copy(this.target,this.target.translation)
 
         this.node = node
+        this.enemies = enemies
+        this.scene = scene
         this.domElement = domElement
 
         this.keys = {};
         this.locked = {}
+        this.clicked = false
 
         this.pitch = pitch;
         this.yaw = yaw;
@@ -47,6 +52,7 @@ export class ThirdPersonController {
 
         this.damage = damage
         this.health = health
+        this.range = range
 
         this.initHandlers();
     }
@@ -56,19 +62,22 @@ export class ThirdPersonController {
         this.pointermoveHandler = this.pointermoveHandler.bind(this);
         this.keydownHandler = this.keydownHandler.bind(this);
         this.keyupHandler = this.keyupHandler.bind(this);
+        this.click = this.click.bind(this);
 
         const element = this.domElement;
         const doc = element.ownerDocument;
 
         doc.addEventListener('keydown', this.keydownHandler);
         doc.addEventListener('keyup', this.keyupHandler);
-
+        
         element.addEventListener('click', e => element.requestPointerLock());
         doc.addEventListener('pointerlockchange', e => {
             if (doc.pointerLockElement === element) {
                 doc.addEventListener('pointermove', this.pointermoveHandler);
+                doc.addEventListener('click',this.click);
             } else {
                 doc.removeEventListener('pointermove', this.pointermoveHandler);
+                doc.removeEventListener('click',this.click);
             }
         });
     }
@@ -107,6 +116,11 @@ export class ThirdPersonController {
             this.view *= this.view == 5000 ? 0.01 : 10
             this.locked['KeyM'] = true
         }
+        if(this.clicked){
+            this.attackEnemy()
+            this.clicked = false
+        }
+
         if(!this.isGrounded){
             vec3.sub(acc,acc,[0,1.5,0])
             if(transform.translation[1] < 23.75){
@@ -116,7 +130,6 @@ export class ThirdPersonController {
                 this.isGrounded = true
             }
         }
-
         // Update velocity based on acceleration.
         vec3.scaleAndAdd(this.velocity, this.velocity, acc, dt * this.acceleration);
         
@@ -174,13 +187,34 @@ export class ThirdPersonController {
         
     }
 
+    attackEnemy() {
+        const me = this.player.getComponentOfType(Transform).translation
+        this.enemies.forEach(nme => {
+            const pos = nme.getComponentOfType(Transform).translation
+            const stat = nme.getComponentOfType(EnemyController)
+
+            const dist = vec3.distance(pos,me)
+            if (dist < this.range) {
+                stat.health -= this.damage
+                console.log("bonk");
+
+                if(stat.health <= 0){
+                    this.enemies.splice(this.enemies.indexOf(nme),1)
+                    this.scene.removeChild(nme)
+                }
+            }
+        });
+    }
+
     keydownHandler(e) {
         this.keys[e.code] = true;
     }
-
     keyupHandler(e) {
         this.keys[e.code] = false;
         this.locked[e.code] = false
+    }
+    click(e){
+        this.clicked = true
     }
 
 }

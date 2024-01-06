@@ -5,6 +5,7 @@ import {
     Node,
     Transform,
 } from '../core.js';
+import { ThirdPersonController } from './ThirdPersonController.js';
 
 export class EnemyController {
     constructor(node, player, domElement, {
@@ -14,9 +15,11 @@ export class EnemyController {
         maxSpeed = 4,
         damage = 10,
         health = 100,
+        range = 3.5,
     } = {}) {
         this.node = node
         this.player = player
+        this.stats 
         this.domElement = domElement
         this.yaw = 0
 
@@ -32,18 +35,24 @@ export class EnemyController {
         
         this.damage = damage
         this.health = health
+        this.range = range
+
+        this.cooldown = 5
+        this.timer = 5
 
         this.init()
     }
     init() {
         this.transform = this.node.getComponentOfType(Transform)
         this.target = this.player.getComponentOfType(Transform)
+        this.stats = this.player.getComponentOfType(ThirdPersonController)
 
-        // spawn enemy at random location
+        // Spawn enemy at random location
         this.transform.translation = [Math.random()*700-350,21,Math.random()*700-350]
     }
 
     update(t, dt) {
+        this.timer += dt
         this.distance = vec3.distance(this.target.translation, this.transform.translation)
 
         const forward = vec3.sub(vec3.create(),this.target.translation, this.transform.translation)
@@ -55,32 +64,46 @@ export class EnemyController {
         this.angle = ((Math.atan2(forward[2],forward[0]) / Math.PI) + 1) * Math.PI
         this.angle = -((this.angle % twopi) + twopi) % twopi - halfpi
 
-        // follow player
+        // Follow player
         let acc = vec3.create();
-        if (this.distance < 300 && this.distance > 3.2) {
+        if (this.distance < 100 && this.distance > this.range) {
             vec3.add(acc, acc, forward)
         }
+        else if (this.distance < this.range*0.9){
+            vec3.sub(acc, acc, forward)
+        }
         else {
-            this.velocity = [0,0,0]
-            acc = [0,0,0]
+            this.velocity = vec3.create()
+            acc = vec3.create()
+            if(this.timer >= this.cooldown && this.distance < this.range){
+                this.timer %= this.cooldown
+                this.stats.health -= this.damage
+                if(this.stats.health <= 0){
+                    this.stats.health = 100
+                    //kle bo umru
+                }
+                console.log(this.stats.health);
+            }
+
         }
 
-        // make sure enemy doesnt start drifting
+        // Make sure enemy doesn't start drifting
         const decay = Math.exp(dt * Math.log(1 - this.decay));
         this.velocity[0] *= decay
         this.velocity[2] *= decay
 
         vec3.scaleAndAdd(this.velocity, this.velocity, acc, dt * this.acceleration);
 
+        // Limit acceleration
         const speed = vec3.length(this.velocity);
         if (speed > this.maxSpeed) {
             vec3.scale(this.velocity, this.velocity, this.maxSpeed / speed);
         }
 
-        // move
+        // Move
         vec3.scaleAndAdd(this.transform.translation, this.transform.translation, this.velocity, dt)
 
-        // rotate
+        // Rotate
         this.transform.rotation = quat.rotateY(quat.create(),quat.create(),this.angle)
         
     }
