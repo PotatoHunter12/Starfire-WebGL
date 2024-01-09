@@ -60,6 +60,8 @@ export class Renderer extends BaseRenderer {
         const lightComponent = light.getComponentOfType(Light);
         const lightMatrix = getGlobalModelMatrix(light);
         const lightPosition = mat4.getTranslation(vec3.create(), lightMatrix);
+        gl.uniform1f(uniforms.uLightRange, 50);
+        gl.uniform4fv(uniforms.uLightColor, [255,230,0,1])
         gl.uniform3fv(uniforms.uLightPosition, lightPosition);
         gl.uniform1f(uniforms.uLightAmbient, lightComponent.ambient);
 

@@ -56,12 +56,12 @@ for (let i = 0; i < 200; i++) {
 
 const light = new Node();
 light.addComponent(new Transform({
-    translation: [-100, 200, 3],
+    translation: [-23,0,0],
 }));
 light.addComponent(new Light({
-    ambient: 0.2,
+    ambient: 0.15,
 }));
-scene.addChild(light);
+player.addChild(light);
 
 function update(time, dt) {
     scene.traverse(node => {
