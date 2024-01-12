@@ -47,8 +47,14 @@ export class EnemyController {
         this.target = this.player.getComponentOfType(Transform)
         this.stats = this.player.getComponentOfType(ThirdPersonController)
 
-        // Spawn enemy at random location
-        this.transform.translation = [Math.random()*700-350,21,Math.random()*700-350]
+        // Spawn enemy at random location around the player
+        const w = 100 * Math.sqrt(Math.random())
+        const t = 2 * Math.PI * Math.random()
+        const x = w * Math.cos(t) / Math.cos(this.target.translation[2]) + this.target.translation[0]
+        const z = w * Math.sin(t) + this.target.translation[2]
+
+
+        this.transform.translation = [x,21,z]
     }
 
     update(t, dt) {
@@ -66,7 +72,7 @@ export class EnemyController {
 
         // Follow player
         let acc = vec3.create();
-        if (this.distance < 100 && this.distance > this.range) {
+        if (this.distance > this.range) {
             vec3.add(acc, acc, forward)
         }
         else if (this.distance < this.range * 0.9){

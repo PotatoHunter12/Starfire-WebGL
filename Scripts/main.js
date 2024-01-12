@@ -29,11 +29,6 @@ const gltfLoader = new GLTFLoader();
 await gltfLoader.load('../Assets/Models/mapa/Proluxiraz.gltf');
 const scene = await gltfLoader.loadScene(gltfLoader.defaultScene);
 
-const mapLoader = new GLTFLoader();
-await mapLoader.load('../Assets/Models/mapa/mapa_dodatki.gltf');
-const stvar = mapLoader.loadNode('tree1')
-scene.addChild(stvar)
-
 const playerLoader = new GLTFLoader();
 await playerLoader.load('../Assets/Models/zhigga-basic/zhigga_basic_standing.gltf');
 const playerScene = await playerLoader.loadScene(playerLoader.defaultScene);
@@ -47,36 +42,34 @@ scene.addChild(player)
 const enemyLoader = new GLTFLoader()
 await enemyLoader.load('../Assets/Models/monsters/ghost_walking.gltf')
 const enemy = await enemyLoader.loadNode("ghost")
-
 const cape = await enemyLoader.loadNode("cape")
 enemy.addChild(cape)
-
-for (let i = 0; i < 200; i++) {
-    const nme = enemy.clone()
-    nme.addComponent(new EnemyController(nme,player,canvas))
-    enemies.push(nme)
-    scene.addChild(nme)
-    
-}
 
 const light = new Node();
 light.addComponent(new Transform({
     translation: [-23,0,0],
 }));
 light.addComponent(new Light({
-    ambient: 0.15,
+    ambient: 0.1,
 }));
 player.addChild(light);
 
 function update(time, dt) {
     if (player.getComponentOfType(ThirdPersonController).health > 0){
+
+        // spawn additional enemies
+        spawn(10-enemies.length)
+
+        //update scene
         scene.traverse(node => {
             for (const component of node.components) {
                 component.update?.(time, dt);
             }
         });
+
     }
     else {
+        // ded
         window.location.href = "ded.html"
     }
     
@@ -88,6 +81,15 @@ function render() {
 
 function resize({ displaySize: { width, height }}) {
     camera.getComponentOfType(Camera).aspect = width / height;
+}
+function spawn(n){
+    for (let i = 0; i < n; i++) {
+        const nme = enemy.clone()
+        nme.addComponent(new EnemyController(nme,player,canvas))
+        enemies.push(nme)
+        scene.addChild(nme)
+        
+    }
 }
 new ResizeSystem({ canvas, resize }).start();
 new UpdateSystem({ update, render }).start();
