@@ -69,7 +69,7 @@ export class EnemyController {
         if (this.distance < 100 && this.distance > this.range) {
             vec3.add(acc, acc, forward)
         }
-        else if (this.distance < this.range*0.9){
+        else if (this.distance < this.range * 0.9){
             vec3.sub(acc, acc, forward)
         }
         else {
@@ -82,7 +82,6 @@ export class EnemyController {
                     this.stats.health = 100
                     //kle bo umru
                 }
-                console.log(this.stats.health);
             }
 
         }

@@ -29,6 +29,11 @@ const gltfLoader = new GLTFLoader();
 await gltfLoader.load('../Assets/Models/mapa/Proluxiraz.gltf');
 const scene = await gltfLoader.loadScene(gltfLoader.defaultScene);
 
+const mapLoader = new GLTFLoader();
+await mapLoader.load('../Assets/Models/mapa/mapa_dodatki.gltf');
+const stvar = mapLoader.loadNode('tree1')
+scene.addChild(stvar)
+
 const playerLoader = new GLTFLoader();
 await playerLoader.load('../Assets/Models/zhigga-basic/zhigga_basic_standing.gltf');
 const playerScene = await playerLoader.loadScene(playerLoader.defaultScene);
@@ -64,11 +69,17 @@ light.addComponent(new Light({
 player.addChild(light);
 
 function update(time, dt) {
-    scene.traverse(node => {
-        for (const component of node.components) {
-            component.update?.(time, dt);
-        }
-    });
+    if (player.getComponentOfType(ThirdPersonController).health > 0){
+        scene.traverse(node => {
+            for (const component of node.components) {
+                component.update?.(time, dt);
+            }
+        });
+    }
+    else {
+        window.location.href = "ded.html"
+    }
+    
 }
 
 function render() {
@@ -78,7 +89,7 @@ function render() {
 function resize({ displaySize: { width, height }}) {
     camera.getComponentOfType(Camera).aspect = width / height;
 }
-
 new ResizeSystem({ canvas, resize }).start();
 new UpdateSystem({ update, render }).start();
+
 

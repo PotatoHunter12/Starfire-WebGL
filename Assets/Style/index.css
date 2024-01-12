@@ -1,6 +1,7 @@
 body, html {
     margin: 0;
     padding: 0;
+    background-color: rgb(31, 31, 62);
     
 }
 canvas {
@@ -53,6 +54,71 @@ canvas {
 
     animation: spin 2s ease-in-out infinite;
 }
+#menu {
+    width:0px;
+    height:0px;
+    border-left: 300px solid transparent;
+    border-right:300px solid transparent;
+    border-top: 300px solid transparent;
+    border-radius: px;
+    position:relative;
+    margin:auto;
+    top:5px;
+    left:2px;
+  }
+
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    margin-bottom: 50px;
+  }
+  
+  
+  #rip {
+    position:relative;
+    bottom:300px;
+    right:300px;
+    width:600px;
+    padding: 20px;
+    background:#000000;
+    text-align: center;
+    vertical-align:middle;
+    font-size:30px;
+    background-size: 1px 300%;
+    transition:0.5s;
+    color:white;
+    cursor:pointer;
+    
+  }
+  
+  #rip:hover {
+    background:rgba(255,230,0,1);
+    color:black;
+    transform:scale(1);
+  }
+  
+  #rip p {
+    position:relative;
+    top:2px;
+    right:4px;
+  }
+
+  #rip a {
+    color: white;
+    text-decoration: none;
+    position:relative;
+    top:0px;
+    right:9px;
+  }
+  h1{
+    text-align: center;
+    margin-top: 3em;
+    font-size: 5em;
+    margin-bottom: 50pt;
+    color: white;
+  }
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
