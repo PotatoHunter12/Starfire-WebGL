@@ -45,12 +45,17 @@ const enemy = await enemyLoader.loadNode("ghost")
 const cape = await enemyLoader.loadNode("cape")
 enemy.addChild(cape)
 
+const model = enemyLoader.gltf.scenes[0]
+const animation = enemyLoader.gltf.animations[0]
+
+console.log(animation);
+
 const light = new Node();
 light.addComponent(new Transform({
     translation: [-23,0,0],
 }));
 light.addComponent(new Light({
-    ambient: 0.1,
+    ambient: 0.2,
 }));
 player.addChild(light);
 

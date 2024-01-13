@@ -19,7 +19,7 @@ export class ThirdPersonController {
         decay = 0.9999999,
         pointerSensitivity = 0.001,
         rotation = [ -0.7,0, 0, 0.7 ],
-        damage = 20,
+        damage = 35,
         health = 100,
         range = 4,
     } = {}) {

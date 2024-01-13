@@ -8,28 +8,26 @@
 
     <link rel="stylesheet" href="../Assets/Style/index.css">
 </head>
-<body>
-    <body>
-        <h1>You Died :/</h1>
-        <div id="menu">
-            <div id="rip" onclick="odpri('index.html')">RESTART</div>
-            <br>
-            <div id="rip" onclick="odpri('index.html')">RETURN TO MENU</div>
-            <br>
-            <div id="rip" onclick="javascript:close_window();">EXIT</div>
-        </div>
+<body class="menu" >
+    <h1>You Died :/</h1>
+    <div id="menu">
+        <div id="rip" onclick="odpri('index.html')">RESTART</div>
+        <br>
+        <div id="rip" onclick="odpri('index.html')">RETURN TO MENU</div>
+        <br>
+        <div id="rip" onclick="javascript:close_window();">EXIT</div>
+    </div>
+
+    <script>
+        function odpri(urlStrani) {
+            window.location.href = urlStrani;
+        }
     
-        <script>
-            function odpri(urlStrani) {
-                window.location.href = urlStrani;
+        function close_window() {
+            if (confirm("Bye")) {
+                close();
             }
-        
-            function close_window() {
-                if (confirm("Bye")) {
-                    close();
-                }
-            }
-        </script>     
-    </body>
+        }
+    </script>  
 </body>
 </html>
