@@ -148,8 +148,10 @@ p{
   margin-left: 80px;
 }
 
-#return{
-  text-align: left;
+.return{
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 @keyframes spin {
