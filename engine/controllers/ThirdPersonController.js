@@ -11,7 +11,7 @@ import { EnemyController } from './EnemyController.js';
 export class ThirdPersonController {
 
     constructor(player, enemies, scene, node, domElement, {
-        pitch = -1.5,
+        pitch = 0,
         yaw = 0,
         velocity = [0, 0, 0],
         acceleration = 50,
@@ -23,9 +23,10 @@ export class ThirdPersonController {
         health = 100,
         range = 4,
     } = {}) {
-        this.view = 50
+        this.view = 20
         this.player = player;
         this.target = this.player.getComponentOfType(Transform);
+        
         this.target.translation = [0,23.75,0]
         vec3.copy(this.target,this.target.translation)
 
@@ -40,8 +41,8 @@ export class ThirdPersonController {
 
         this.pitch = pitch;
         this.yaw = yaw;
-        this.rotation = rotation
-        this.rotation2 = this.target.rotation
+        this.rotation = [ 0, -1, 0, 0 ]
+        this.rotation2 = [ 0, 0, 0, -1 ]
 
         this.velocity = velocity;
         this.acceleration = acceleration;
@@ -59,6 +60,8 @@ export class ThirdPersonController {
     
 
     initHandlers() {
+        const neki = this.node.getComponentOfType(Transform)
+
         this.pointermoveHandler = this.pointermoveHandler.bind(this);
         this.keydownHandler = this.keydownHandler.bind(this);
         this.keyupHandler = this.keyupHandler.bind(this);
@@ -174,16 +177,16 @@ export class ThirdPersonController {
         this.yaw   -= dx * this.pointerSensitivity;
         
         const twopi = Math.PI * 2;
-        const minpi = -Math.PI / 2.4;
 
-        this.pitch = Math.min(Math.max(this.pitch, -Math.PI), minpi);
+        console.log(this.pitch);
+        this.pitch = Math.min(Math.max(this.pitch, -Math.PI/2), Math.PI/32);
         this.yaw = ((this.yaw % twopi) + twopi) % twopi;
         
         // rotate the camera and then the whole player
-        this.rotation = quat.create()
-        this.rotation2 = [ 0,0, -0.7, 0.7 ]
+        this.rotation = [ 0, -1,0, 0 ]
+        this.rotation2 = [ 0,0,0,-1 ]
         quat.rotateX(this.rotation, this.rotation, this.pitch);
-        quat.rotateX(this.rotation2, this.rotation2, this.yaw)
+        quat.rotateY(this.rotation2, this.rotation2, -this.yaw)
         
     }
 

@@ -30,7 +30,7 @@ await gltfLoader.load('../Assets/Models/mapa/Proluxiraz.gltf');
 const scene = await gltfLoader.loadScene(gltfLoader.defaultScene);
 
 const playerLoader = new GLTFLoader();
-await playerLoader.load('../Assets/Models/zhigga-basic/zhigga_basic_standing.gltf');
+await playerLoader.load('../Assets/Models/zhigga/zhigga.gltf');
 const playerScene = await playerLoader.loadScene(playerLoader.defaultScene);
 
 const player = await playerLoader.loadNode("Zhigga_standing");
@@ -52,7 +52,7 @@ console.log(animation);
 
 const light = new Node();
 light.addComponent(new Transform({
-    translation: [-23,0,0],
+    translation: [0,1,0],
 }));
 light.addComponent(new Light({
     ambient: 0.2,
