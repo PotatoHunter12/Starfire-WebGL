@@ -142,86 +142,13 @@
 	"materials":[
 		{
 			"doubleSided":true,
-			"name":"Material.001",
+			"name":"Material.007",
 			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.22456979751586914,
-					0.15095889568328857,
-					0.17405441403388977,
-					1
-				],
+				"baseColorTexture":{
+					"index":0
+				},
 				"metallicFactor":0,
-				"roughnessFactor":0.9128440618515015
-			}
-		},
-		{
-			"doubleSided":true,
-			"name":"Material.002",
-			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.8003311157226562,
-					0.5706323385238647,
-					0.02695680595934391,
-					1
-				],
-				"metallicFactor":0,
-				"roughnessFactor":0.9220183491706848
-			}
-		},
-		{
-			"doubleSided":true,
-			"name":"Material.005",
-			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.13162368535995483,
-					0.06157267093658447,
-					0.10365436971187592,
-					1
-				],
-				"metallicFactor":0,
-				"roughnessFactor":0.7752293348312378
-			}
-		},
-		{
-			"doubleSided":true,
-			"name":"Material.006",
-			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.2699826657772064,
-					0.8006061315536499,
-					0.04309582710266113,
-					1
-				],
-				"metallicFactor":0,
-				"roughnessFactor":0.8394495248794556
-			}
-		},
-		{
-			"doubleSided":true,
-			"name":"Material.003",
-			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.1582537293434143,
-					0.10039021074771881,
-					0.15226693451404572,
-					1
-				],
-				"metallicFactor":0,
-				"roughnessFactor":0.5
-			}
-		},
-		{
-			"doubleSided":true,
-			"name":"Material.004",
-			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.8014032244682312,
-					0.1272871196269989,
-					0.06628526747226715,
-					1
-				],
-				"metallicFactor":0,
-				"roughnessFactor":0.5
+				"roughnessFactor":0.8853211402893066
 			}
 		}
 	],
@@ -250,7 +177,7 @@
 						"TEXCOORD_0":6
 					},
 					"indices":7,
-					"material":1
+					"material":0
 				}
 			]
 		},
@@ -264,7 +191,7 @@
 						"TEXCOORD_0":10
 					},
 					"indices":3,
-					"material":2
+					"material":0
 				}
 			]
 		},
@@ -278,7 +205,7 @@
 						"TEXCOORD_0":13
 					},
 					"indices":14,
-					"material":3
+					"material":0
 				}
 			]
 		},
@@ -292,7 +219,7 @@
 						"TEXCOORD_0":17
 					},
 					"indices":3,
-					"material":4
+					"material":0
 				}
 			]
 		},
@@ -306,9 +233,22 @@
 						"TEXCOORD_0":20
 					},
 					"indices":21,
-					"material":5
+					"material":0
 				}
 			]
+		}
+	],
+	"textures":[
+		{
+			"sampler":0,
+			"source":0
+		}
+	],
+	"images":[
+		{
+			"mimeType":"image/png",
+			"name":"tinyCluster1texture",
+			"uri":"tinyCluster1texture.png"
 		}
 	],
 	"accessors":[
@@ -637,6 +577,12 @@
 			"byteLength":360,
 			"byteOffset":30000,
 			"target":34963
+		}
+	],
+	"samplers":[
+		{
+			"magFilter":9729,
+			"minFilter":9987
 		}
 	],
 	"buffers":[
