@@ -18337,67 +18337,67 @@
 		{
 			"mimeType":"image/png",
 			"name":"mountain_texture",
-			"uri":"mountain_texture.png"
+			"uri":"teksture/mountain_texture.png"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"ground_texture.png",
-			"uri":"ground_texture_png.png"
+			"uri":"teksture/ground_texture_png.png"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"sky_texture.png",
-			"uri":"sky_texture_png.png"
+			"uri":"teksture/sky_texture_png.png"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"shapeship2",
-			"uri":"shapeship2.png"
+			"uri":"teksture/shapeship2.png"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"spaceship3",
-			"uri":"spaceship3.png"
+			"uri":"teksture/spaceship3.png"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"spaceship1",
-			"uri":"spaceship1.png"
+			"uri":"teksture/spaceship1.png"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"dry_vegetaton",
-			"uri":"dry_vegetaton.png"
+			"uri":"teksture/dry_vegetaton.png"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"drevo",
-			"uri":"drevo.png"
+			"uri":"teksture/drevo.png"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"drevo2",
-			"uri":"drevo2.png"
+			"uri":"teksture/drevo2.png"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"spaceship0_texture.png",
-			"uri":"spaceship0_texture_png.png"
+			"uri":"teksture/spaceship0_texture_png.png"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"kamen",
-			"uri":"kamen.png"
+			"uri":"teksture/kamen.png"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"kamen2",
-			"uri":"kamen2.png"
+			"uri":"teksture/kamen2.png"
 		},
 		{
 			"mimeType":"image/png",
 			"name":"kamen_ena",
-			"uri":"kamen_ena.png"
+			"uri":"teksture/kamen_ena.png"
 		}
 	],
 	"accessors":[
