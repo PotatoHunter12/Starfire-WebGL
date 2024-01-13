@@ -18326,11 +18326,11 @@
 		},
 		{
 			"sampler":0,
-			"source":6
+			"source":13
 		},
 		{
 			"sampler":0,
-			"source":6
+			"source":13
 		}
 	],
 	"images":[
@@ -18366,8 +18366,8 @@
 		},
 		{
 			"mimeType":"image/png",
-			"name":"dry_vegetaton",
-			"uri":"teksture/dry_vegetaton.png"
+			"name":"veja1",
+			"uri":"teksture/veja1.png"
 		},
 		{
 			"mimeType":"image/png",
@@ -18398,6 +18398,11 @@
 			"mimeType":"image/png",
 			"name":"kamen_ena",
 			"uri":"teksture/kamen_ena.png"
+		},
+		{
+			"mimeType":"image/png",
+			"name":"dry_vegetaton",
+			"uri":"teksture/dry_vegetaton.png"
 		}
 	],
 	"accessors":[

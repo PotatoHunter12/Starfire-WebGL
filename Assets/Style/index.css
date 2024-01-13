@@ -2,6 +2,7 @@ html,body {
     margin: 0;
     padding: 0;
 }
+
 canvas {
     background-color: rgb(13, 13, 20);
 }
@@ -52,99 +53,104 @@ canvas {
 
     animation: spin 2s ease-in-out infinite;
 }
+
 .menu {
   background-image: url("../Images/starfire-enhanced.png");
-    background-size:100%;
-    background-repeat: no-repeat;
+  background-size:100%;
+  background-repeat: no-repeat;
 }
+
 #menu {
-    width:0px;
-    height:0px;
-    border-left: 300px solid transparent;
-    border-right:300px solid transparent;
-    border-top: 300px solid transparent;
-    border-radius: px;
-    position:relative;
-    margin:auto;
-    top:5px;
-    left:2px;
-  }
+  width:0px;
+  height:0px;
+  border-left: 300px solid transparent;
+  border-right:300px solid transparent;
+  border-top: 300px solid transparent;
+  border-radius: px;
+  position:relative;
+  margin:auto;
+  top:5px;
+  left:2px;
+}
 
-  img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    /*margin-top: 80px;*/
-    /*margin-bottom: 50px;*/
-  }
-  
-  
-  #button {
-    position:relative;
-    bottom:300px;
-    right:300px;
-    width:600px;
-    padding: 20px;
-    background:rgba(0,0,0,0.5);
-    text-align: center;
-    vertical-align:middle;
-    font-size:30px;
-    background-size: 1px 300%;
-    transition:0.5s;
-    color:white;
-    cursor:pointer;
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  /*margin-top: 80px;*/
+  /*margin-bottom: 50px;*/
+}
     
-  }
+#button {
+  position:relative;
+  bottom:300px;
+  right:300px;
+  width:600px;
+  padding: 20px;
+  background:rgba(0,0,0,0.5);
+  text-align: center;
+  vertical-align:middle;
+  font-size:30px;
+  background-size: 1px 300%;
+  transition:0.5s;
+  color:white;
+  cursor:pointer;
+}
   
-  #button:hover {
-    background:rgba(255, 221, 96, 0.6);
-    color:black;
-    transform:scale(1);
-  }
-  
-  #button p {
-    position:relative;
-    top:2px;
-    right:4px;
-  }
+#button:hover {
+  background:rgba(255, 221, 96, 0.6);
+  color:black;
+  transform:scale(1);
+}
 
-  #button a {
-    color: white;
-    text-decoration: none;
-    position:relative;
-    top:0px;
-    right:9px;
+#button p {
+  position:relative;
+  top:2px;
+  right:4px;
+}
 
-  }
-  h1{
-    text-align: center;
-    margin-top: 3em;
-    font-size: 5em;
-    margin-bottom: 50pt;
-    color: white;
-  }
+#button a {
+  color: white;
+  text-decoration: none;
+  position:relative;
+  top:0px;
+  right:9px;
+}
 
-  h3{
-    text-align: left;
-    margin-top: 1em;
-    margin-left: 1em;
-    font-size: 2em;
-    color: rgba(255, 221, 96, 1);
-  }
+h1{
+  text-align: center;
+  margin-top: 3em;
+  font-size: 5em;
+  margin-bottom: 50pt;
+  color: white;
+}
 
-  p{
-    text-align: left;
-    font-size: 1em;
-    color: white;
-    margin-right: 150px;
-    margin-left: 80px;
-  }
+h3{
+  text-align: left;
+  margin-top: 1em;
+  margin-left: 1em;
+  font-size: 2em;
+  color: rgba(255, 221, 96, 1);
+}
 
-  #text{
-    background-color: rgba(255, 255, 255, 0.1);
-    margin-right: 150px;
-    margin-left: 80px;
-  }
+p{
+  text-align: left;
+  font-size: 1em;
+  color: white;
+  margin-right: 150px;
+  margin-left: 80px;
+}
+
+#text{
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-right: 150px;
+  margin-left: 80px;
+}
+
+#return{
+  text-align: left;
+}
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
