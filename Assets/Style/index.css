@@ -74,12 +74,12 @@ canvas {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 100px;
-    margin-bottom: 50px;
+    margin-top: 80px;
+    /*margin-bottom: 50px;*/
   }
   
   
-  #rip {
+  #button {
     position:relative;
     bottom:300px;
     right:300px;
@@ -96,24 +96,25 @@ canvas {
     
   }
   
-  #rip:hover {
+  #button:hover {
     background:rgba(255, 221, 96, 0.6);
     color:black;
     transform:scale(1);
   }
   
-  #rip p {
+  #button p {
     position:relative;
     top:2px;
     right:4px;
   }
 
-  #rip a {
+  #button a {
     color: white;
     text-decoration: none;
     position:relative;
     top:0px;
     right:9px;
+
   }
   h1{
     text-align: center;
@@ -121,6 +122,28 @@ canvas {
     font-size: 5em;
     margin-bottom: 50pt;
     color: white;
+  }
+
+  h3{
+    text-align: left;
+    margin-top: 1em;
+    margin-left: 1em;
+    font-size: 2em;
+    color: rgba(255, 221, 96, 1);
+  }
+
+  p{
+    text-align: left;
+    font-size: 1em;
+    color: white;
+    margin-right: 150px;
+    margin-left: 80px;
+  }
+
+  #text{
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-right: 150px;
+    margin-left: 80px;
   }
 
 @keyframes spin {

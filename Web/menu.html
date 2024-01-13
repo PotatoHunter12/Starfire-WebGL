@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Starfire</title>
+
+    <link rel="stylesheet" href="../Assets/Style/index.css">
+</head>
+
+<body class="menu" >
+    <img src="C:\Users\laran\OneDrive\Namizje\FRI\RG\Starfire\Assets\Images\starfire_logo.png" alt="logo" style="width:60%">
+
+    <div id="menu">
+        <div id="button" onclick="odpri('index.html')">START</div>
+        <br>
+        <div id="button" onclick="odpri('how.html')">HOW TO PLAY</div>
+        <br>
+        <div id="button" onclick="odpri('about.html')">ABOUT</div>
+        <br>
+        <div id="button" onclick="javascript:close_window();">EXIT</div>
+    </div>
+
+    <script language="javascript" type="text/javascript">
+        function close_window() {
+            if (confirm("Do you want to leave the game?")) {
+                close();
+            }
+        }
+    </script>      
+</body>
+
+</html>
