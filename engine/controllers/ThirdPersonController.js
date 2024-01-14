@@ -23,11 +23,11 @@ export class ThirdPersonController {
         health = 100,
         range = 4,
     } = {}) {
-        this.view = 20
+        this.view = 150
         this.player = player;
         this.target = this.player.getComponentOfType(Transform);
         
-        this.target.translation = [0,23.75,0]
+        this.target.translation = [0,22.75,0]
         vec3.copy(this.target,this.target.translation)
 
         this.node = node
@@ -42,8 +42,8 @@ export class ThirdPersonController {
 
         this.pitch = pitch;
         this.yaw = yaw;
-        this.rotation = [ 0, -1, 0, 0 ]
-        this.rotation2 = [ 0, 0, 0, -1 ]
+        this.rotation = [ 0.7, -0.7, 0, 0 ]
+        this.rotation2 = [ 0, 0, -0.7, 0.7 ]
 
         this.velocity = velocity;
         this.acceleration = acceleration;
@@ -51,6 +51,7 @@ export class ThirdPersonController {
         this.decay = decay;
         this.pointerSensitivity = pointerSensitivity;
         this.isGrounded = true
+        this.step = 1
 
         this.damage = damage
         this.health = health
@@ -115,17 +116,21 @@ export class ThirdPersonController {
             this.maxSpeed = 5
         }
         if(this.keys['KeyM'] && !this.locked['KeyM']){
-            this.view *= this.view >= 2000 ? 0.01 : 10
+            this.view *= this.view >= 5000 ? 0.01 : 10
             this.locked['KeyM'] = true
         }
         if(this.clicked){
             this.attackEnemy(1)
             this.clicked = false
+            
         }
         if(this.rclicked){
             this.attackEnemy(2)
             this.rclicked = false
         }
+        
+        this.godHelpUs(acc)
+
 
         // detecting collisions with trees and rocks
         this.scene.children.forEach(child => {
@@ -134,7 +139,8 @@ export class ThirdPersonController {
                 const a = transform.translation
                 const b = tr.translation
                 const distance = Math.sqrt(Math.pow(a[0]-b[0],2)+Math.pow(a[2]-b[2],2))
-                if(distance < tr.scale[0]+1){
+                if(distance < tr.scale[0] + 1){
+                    console.log(child.name);
                     vec3.scale(acc,acc,- 20)
                     this.maxSpeed = 10
                 }       
@@ -144,14 +150,25 @@ export class ThirdPersonController {
                 const a = transform.translation
                 const b = tr.translation
                 const distance = Math.sqrt(Math.pow(a[0]-b[0],2)+Math.pow(a[2]-b[2],2))
-                if(distance < tr.scale[0]*5){
+                if(distance < tr.scale[0] * 5){
                     console.log(child.name);
-                    vec3.scale(acc,acc,- 20)
+                    vec3.scale(acc, acc, -20)
                     this.maxSpeed = 10
+                } 
+            }
+            else if(child.name.includes("starfire")) {
+                const tr = child.getComponentOfType(Transform)
+                const a = transform.translation
+                const b = tr.translation
+                const distance = Math.sqrt(Math.pow(a[0]-b[0],2)+Math.pow(a[2]-b[2],2))
+                if(distance < tr.scale[0]/20){
+                    console.log(child.name);
+                    this.health += 0.01
                 } 
             }
                 
         });
+        if(this.health > 100) this.health = 100
         // Update velocity based on acceleration.
         vec3.scaleAndAdd(this.velocity, this.velocity, acc, dt * this.acceleration);
         
@@ -193,14 +210,14 @@ export class ThirdPersonController {
         
         const twopi = Math.PI * 2;
 
-        this.pitch = Math.min(Math.max(this.pitch, -Math.PI/2), Math.PI/32);
+        this.pitch = Math.min(Math.max(this.pitch, -Math.PI/2), Math.PI/64);
         this.yaw = ((this.yaw % twopi) + twopi) % twopi;
         
         // rotate the camera and then the whole player
-        this.rotation = [ 0, -1,0, 0 ]
-        this.rotation2 = [ 0,0,0,-1 ]
+        this.rotation = [ 0.7, -0.7, 0, 0 ]
+        this.rotation2 = [ 0, 0, -0.7, 0.7 ]
         quat.rotateX(this.rotation, this.rotation, this.pitch);
-        quat.rotateY(this.rotation2, this.rotation2, -this.yaw)
+        quat.rotateX(this.rotation2, this.rotation2, this.yaw)
         
     }
 
@@ -219,7 +236,6 @@ export class ThirdPersonController {
                     this.scene.removeChild(nme)
                     this.kills++
                     this.health += 5
-                    if(this.health > 100) this.health = 100
                     document.querySelector(".starfire").innerHTML = this.kills
                 }
             }
@@ -238,6 +254,33 @@ export class ThirdPersonController {
             this.clicked = true
         else if(e.which == 3)
             this.rclicked = true
+    }
+    godHelpUs(acc){
+        const left = this.scene.find(node => node.name == "arm_left")
+        const right = this.scene.find(node => node.name == "arm_right")
+
+        const leftleg = this.scene.find(node => node.name == "leg_left")
+        const rightleg = this.scene.find(node => node.name == "leg_right")
+
+        const lt = left.getComponentOfType(Transform)
+        const rt = right.getComponentOfType(Transform)
+        const ltl = leftleg.getComponentOfType(Transform)
+        const rtl = rightleg.getComponentOfType(Transform)
+
+        if(vec3.length(acc) > 0){
+            if(rtl.rotation[3] < 0.97) this.step*=-1
+            lt.rotation = quat.rotateY(quat.create(),lt.rotation,0.01*this.step)
+            rt.rotation = quat.rotateY(quat.create(),rt.rotation,-0.01*this.step)
+            ltl.rotation = quat.rotateY(quat.create(),ltl.rotation,-0.01*this.step)
+            rtl.rotation = quat.rotateY(quat.create(),rtl.rotation,0.01*this.step)
+        }
+        else {
+            lt.rotation = quat.create()
+            rt.rotation = quat.create()
+        }
+        
+        // lt.rotation = quat.rotateY(quat.create(),lt.rotation,0.02)
+        // rt.rotation = quat.rotateY(quat.create(),rt.rotation,-0.02)
     }
 
 }

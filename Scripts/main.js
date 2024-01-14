@@ -33,7 +33,7 @@ const playerLoader = new GLTFLoader()
 await playerLoader.load('../Assets/Models/zhigga/zhigga.gltf')
 const playerScene = await playerLoader.loadScene(playerLoader.defaultScene)
 
-const player = await playerLoader.loadNode("Zhigga_standing");
+const player = await playerLoader.loadNode("zhigga");
 const camera = await playerScene.find(node => node.getComponentOfType(Camera));
 
 player.addComponent(new ThirdPersonController(player, enemies, scene, camera, canvas));
@@ -41,18 +41,16 @@ scene.addChild(player)
 
 
 const enemyLoader = new GLTFLoader()
-await enemyLoader.load('../Assets/Models/monsters/ghost_walking.gltf')
+await enemyLoader.load('../Assets/Models/monsters/ghost.gltf')
 const enemy = await enemyLoader.loadNode("ghost")
 const cape = await enemyLoader.loadNode("cape")
 enemy.addChild(cape)
 
-const model = enemyLoader.gltf.scenes[0]
-const animation = enemyLoader.gltf.animations[0]
 
 
 const light = new Node();
 light.addComponent(new Transform({
-    translation: [0,1,0],
+    translation: [-10,0,0],
 }));
 light.addComponent(new Light({
     ambient: 0.1,
@@ -65,7 +63,7 @@ function update(time, dt) {
     if (player.getComponentOfType(ThirdPersonController).health > 0){
 
         // spawn additional enemies
-        spawn(Math.floor(stats.kills/5)+0-enemies.length)
+        spawn(Math.floor(stats.kills/5)+10-enemies.length)
 
         //update scene
         scene.traverse(node => {
