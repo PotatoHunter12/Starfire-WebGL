@@ -68,6 +68,7 @@ export class Node {
     }
     clone() {
         const newnode = new Node();
+        newnode.name = this.name
         newnode.children = this.children.map(child => child.clone());
         newnode.parent = this.parent;
         this.components.map(component =>

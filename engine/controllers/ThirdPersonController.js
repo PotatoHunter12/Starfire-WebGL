@@ -18,7 +18,6 @@ export class ThirdPersonController {
         maxSpeed = 20,
         decay = 0.9999999,
         pointerSensitivity = 0.001,
-        rotation = [ -0.7,0, 0, 0.7 ],
         damage = 35,
         health = 100,
         range = 4,
@@ -230,9 +229,10 @@ export class ThirdPersonController {
             const dist = vec3.distance(pos,me)
             if (dist < this.range) {
                 stat.health -= this.damage
-
+                stat.push = true
                 if(stat.health <= 0){
                     this.enemies.splice(this.enemies.indexOf(nme),1)
+                    stat.die()
                     this.scene.removeChild(nme)
                     this.kills++
                     this.health += 5

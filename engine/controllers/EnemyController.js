@@ -37,6 +37,9 @@ export class EnemyController {
         this.health = health
         this.range = range
 
+        this.push = false
+        this.pushcd = 0.05
+
         this.cooldown = 1
         this.timer = 0.5
 
@@ -55,10 +58,13 @@ export class EnemyController {
 
 
         this.transform.translation = [x,21,z]
+        
     }
 
     update(t, dt) {
+        this.animate()
         this.distance = vec3.distance(this.target.translation, this.transform.translation)
+        this.maxSpeed = 8
 
         const forward = vec3.sub(vec3.create(),this.target.translation, this.transform.translation)
         forward[1] = 0
@@ -71,7 +77,16 @@ export class EnemyController {
 
         // Follow player
         let acc = vec3.create();
-        if (this.distance > this.range) {
+        if(this.pushcd <= 0){
+            this.push = false
+            this.pushcd = 0.05
+        }
+        if(this.push){
+            vec3.sub(acc, acc, vec3.scale(vec3.create(),forward,3))
+            this.maxSpeed = 20
+            this.pushcd -= dt
+        }
+        else if (this.distance > this.range) {
             vec3.add(acc, acc, forward)
         }
         else if (this.distance < this.range * 0.9){
@@ -108,4 +123,16 @@ export class EnemyController {
         this.transform.rotation = quat.rotateY(quat.create(),quat.create(),this.angle)
         
     }
+    animate(){
+        const arms = this.node.find(node => node.name == "arms")
+        const transform = arms.getComponentOfType(Transform)
+
+        transform.rotation = quat.rotateX(quat.create(),transform.rotation,0.02)
+        console.log(transform);
+    }
+    die() {
+        const die = new Audio("../../Assets/Sounds/bonk.mp3")
+        die.play()
+    }
+    
 }
