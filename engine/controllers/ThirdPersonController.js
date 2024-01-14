@@ -11,7 +11,7 @@ import { EnemyController } from './EnemyController.js';
 export class ThirdPersonController {
 
     constructor(player, enemies, scene, node, domElement, {
-        pitch = 0,
+        pitch = -0.2,
         yaw = 0,
         velocity = [0, 0, 0],
         acceleration = 50,
@@ -56,6 +56,9 @@ export class ThirdPersonController {
         this.health = health
         this.range = range
         this.kills = 0
+
+        this.charge = new Audio("../../Assets/Sounds/starfire.wav")
+        this.charge.volume = 0.2
 
         this.initHandlers();
     }
@@ -128,7 +131,7 @@ export class ThirdPersonController {
             this.rclicked = false
         }
         
-        this.godHelpUs(acc)
+        this.animate(acc)
 
 
         // detecting collisions with trees and rocks
@@ -160,9 +163,10 @@ export class ThirdPersonController {
                 const a = transform.translation
                 const b = tr.translation
                 const distance = Math.sqrt(Math.pow(a[0]-b[0],2)+Math.pow(a[2]-b[2],2))
-                if(distance < tr.scale[0]/20){
+                if(distance < tr.scale[0]/10){
                     console.log(child.name);
                     this.health += 0.01
+                    this.charge.play()
                 } 
             }
                 
@@ -217,6 +221,7 @@ export class ThirdPersonController {
         this.rotation2 = [ 0, 0, -0.7, 0.7 ]
         quat.rotateX(this.rotation, this.rotation, this.pitch);
         quat.rotateX(this.rotation2, this.rotation2, this.yaw)
+        console.log(this.pitch);
         
     }
 
@@ -255,7 +260,7 @@ export class ThirdPersonController {
         else if(e.which == 3)
             this.rclicked = true
     }
-    godHelpUs(acc){
+    animate(acc){
         const left = this.scene.find(node => node.name == "arm_left")
         const right = this.scene.find(node => node.name == "arm_right")
 

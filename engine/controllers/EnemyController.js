@@ -128,7 +128,6 @@ export class EnemyController {
         const transform = arms.getComponentOfType(Transform)
 
         transform.rotation = quat.rotateX(quat.create(),transform.rotation,0.02)
-        console.log(transform);
     }
     die() {
         const die = new Audio("../../Assets/Sounds/bonk.mp3")
