@@ -38,6 +38,7 @@ export class ThirdPersonController {
         this.keys = {};
         this.locked = {}
         this.clicked = false
+        this.rclicked = false
 
         this.pitch = pitch;
         this.yaw = yaw;
@@ -118,22 +119,36 @@ export class ThirdPersonController {
             this.locked['KeyM'] = true
         }
         if(this.clicked){
-            this.attackEnemy()
+            this.attackEnemy(1)
             this.clicked = false
         }
+        if(this.rclicked){
+            this.attackEnemy(2)
+            this.rclicked = false
+        }
 
-        // detecting collisions with trees
+        // detecting collisions with trees and rocks
         this.scene.children.forEach(child => {
-            if(child.name.includes("tree") || child.name.includes("skala")){
+            if(child.name.includes("tree")){
+                const tr = child.getComponentOfType(Transform)
                 const a = transform.translation
-                const b = child.getComponentOfType(Transform).translation
-                const hm = a
+                const b = tr.translation
                 const distance = Math.sqrt(Math.pow(a[0]-b[0],2)+Math.pow(a[2]-b[2],2))
-                if(distance<3){
-                    vec3.scale(acc,acc,-20)
+                if(distance < tr.scale[0]+1){
+                    vec3.scale(acc,acc,- 20)
                     this.maxSpeed = 10
-                }
-                    
+                }       
+            }
+            else if(child.name.includes("skala")) {
+                const tr = child.getComponentOfType(Transform)
+                const a = transform.translation
+                const b = tr.translation
+                const distance = Math.sqrt(Math.pow(a[0]-b[0],2)+Math.pow(a[2]-b[2],2))
+                if(distance < tr.scale[0]*5){
+                    console.log(child.name);
+                    vec3.scale(acc,acc,- 20)
+                    this.maxSpeed = 10
+                } 
             }
                 
         });
@@ -189,7 +204,7 @@ export class ThirdPersonController {
         
     }
 
-    attackEnemy() {
+    attackEnemy(n) {
         const me = this.player.getComponentOfType(Transform).translation
         this.enemies.forEach(nme => {
             const pos = nme.getComponentOfType(Transform).translation
@@ -219,7 +234,10 @@ export class ThirdPersonController {
         this.locked[e.code] = false
     }
     click(e){
-        this.clicked = true
+        if(e.which == 1)
+            this.clicked = true
+        else if(e.which == 3)
+            this.rclicked = true
     }
 
 }

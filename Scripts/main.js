@@ -49,6 +49,7 @@ enemy.addChild(cape)
 const model = enemyLoader.gltf.scenes[0]
 const animation = enemyLoader.gltf.animations[0]
 
+
 const light = new Node();
 light.addComponent(new Transform({
     translation: [0,1,0],
