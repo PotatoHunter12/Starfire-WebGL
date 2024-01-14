@@ -58,6 +58,7 @@ canvas {
   background-image: url("../Images/starfire-enhanced.png");
   background-size:100%;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #menu {
