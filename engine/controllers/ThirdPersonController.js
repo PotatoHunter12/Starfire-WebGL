@@ -54,6 +54,7 @@ export class ThirdPersonController {
         this.damage = damage
         this.health = health
         this.range = range
+        this.kills = 0
 
         this.initHandlers();
     }
@@ -108,10 +109,6 @@ export class ThirdPersonController {
         if (this.keys['KeyA'] || this.keys['ArrowLeft']) {
             vec3.sub(acc, acc, right);
         }
-        if(this.keys['Space'] && this.isGrounded){
-            vec3.add(acc,acc,[0,200,0])
-            this.isGrounded = false
-        }
         if(this.keys['ShiftLeft']){
             this.maxSpeed = 5
         }
@@ -122,16 +119,6 @@ export class ThirdPersonController {
         if(this.clicked){
             this.attackEnemy()
             this.clicked = false
-        }
-
-        if(!this.isGrounded){
-            vec3.sub(acc,acc,[0,1.5,0])
-            if(transform.translation[1] < 23.75){
-                transform.translation[1] = 23.75 
-                acc[1] = 0
-                this.velocity[1] = 0
-                this.isGrounded = true
-            }
         }
         // Update velocity based on acceleration.
         vec3.scaleAndAdd(this.velocity, this.velocity, acc, dt * this.acceleration);
@@ -178,7 +165,6 @@ export class ThirdPersonController {
         
         const twopi = Math.PI * 2;
 
-        console.log(this.pitch);
         this.pitch = Math.min(Math.max(this.pitch, -Math.PI/2), Math.PI/32);
         this.yaw = ((this.yaw % twopi) + twopi) % twopi;
         
@@ -199,11 +185,14 @@ export class ThirdPersonController {
             const dist = vec3.distance(pos,me)
             if (dist < this.range) {
                 stat.health -= this.damage
-                console.log("bonk");
 
                 if(stat.health <= 0){
                     this.enemies.splice(this.enemies.indexOf(nme),1)
                     this.scene.removeChild(nme)
+                    this.kills++
+                    this.health += 5
+                    if(this.health > 100) this.health = 100
+                    document.querySelector(".starfire").innerHTML = this.kills
                 }
             }
         });

@@ -12,7 +12,7 @@ export class EnemyController {
         velocity = [0, 0, 0],
         acceleration = 50,
         decay = 0.9999999,
-        maxSpeed = 4,
+        maxSpeed = 8,
         damage = 10,
         health = 100,
         range = 3.5,
@@ -37,8 +37,8 @@ export class EnemyController {
         this.health = health
         this.range = range
 
-        this.cooldown = 5
-        this.timer = 5
+        this.cooldown = 1
+        this.timer = 0.5
 
         this.init()
     }
@@ -58,7 +58,6 @@ export class EnemyController {
     }
 
     update(t, dt) {
-        this.timer += dt
         this.distance = vec3.distance(this.target.translation, this.transform.translation)
 
         const forward = vec3.sub(vec3.create(),this.target.translation, this.transform.translation)
@@ -79,15 +78,13 @@ export class EnemyController {
             vec3.sub(acc, acc, forward)
         }
         else {
+            this.timer += dt
             this.velocity = vec3.create()
             acc = vec3.create()
             if(this.timer >= this.cooldown && this.distance < this.range){
                 this.timer %= this.cooldown
                 this.stats.health -= this.damage
-                if(this.stats.health <= 0){
-                    this.stats.health = 100
-                    //kle bo umru
-                }
+                
             }
 
         }
