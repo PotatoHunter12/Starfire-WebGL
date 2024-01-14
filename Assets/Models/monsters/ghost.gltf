@@ -3,41 +3,24 @@
 		"generator":"Khronos glTF Blender I/O v4.0.44",
 		"version":"2.0"
 	},
-	"extensionsUsed":[
-		"KHR_lights_punctual"
-	],
-	"extensionsRequired":[
-		"KHR_lights_punctual"
-	],
-	"extensions":{
-		"KHR_lights_punctual":{
-			"lights":[
-				{
-					"color":[
-						1,
-						1,
-						1
-					],
-					"intensity":5464,
-					"type":"directional",
-					"name":"Sun"
-				}
-			]
-		}
-	},
 	"scene":0,
 	"scenes":[
 		{
 			"name":"Scene",
 			"nodes":[
-				4
+				3
 			]
 		}
 	],
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"arms"
+			"name":"arms",
+			"translation":[
+				3.3252384662628174,
+				32.742610931396484,
+				-0.6249606013298035
+			]
 		},
 		{
 			"camera":0,
@@ -74,30 +57,10 @@
 			]
 		},
 		{
-			"extensions":{
-				"KHR_lights_punctual":{
-					"light":0
-				}
-			},
-			"name":"Sun",
-			"rotation":[
-				-0.7071068286895752,
-				0,
-				0,
-				0.7071068286895752
-			],
-			"translation":[
-				0,
-				35,
-				0
-			]
-		},
-		{
 			"children":[
 				0,
 				1,
-				2,
-				3
+				2
 			],
 			"mesh":2,
 			"name":"ghost",
@@ -216,14 +179,14 @@
 			"componentType":5126,
 			"count":226,
 			"max":[
-				12.539395332336426,
-				31.98390769958496,
-				0.7097828388214111
+				9.214157104492188,
+				-0.7587051391601562,
+				1.3347434997558594
 			],
 			"min":[
-				-12.539389610290527,
-				19.151798248291016,
-				-2.706254720687866
+				-15.864627838134766,
+				-13.590814590454102,
+				-2.081294059753418
 			],
 			"type":"VEC3"
 		},
