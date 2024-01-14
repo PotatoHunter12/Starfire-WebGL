@@ -11,7 +11,7 @@ import { EnemyController } from './EnemyController.js';
 export class ThirdPersonController {
 
     constructor(player, enemies, scene, node, domElement, {
-        pitch = -0.2,
+        pitch = 0,
         yaw = 0,
         velocity = [0, 0, 0],
         acceleration = 50,
@@ -42,7 +42,7 @@ export class ThirdPersonController {
         this.pitch = pitch;
         this.yaw = yaw;
         this.rotation = [ 0.7, -0.7, 0, 0 ]
-        this.rotation2 = [ 0, 0, -0.7, 0.7 ]
+        this.rotation2 = quat.rotateZ(quat.create(),quat.create(),-Math.PI/2)
 
         this.velocity = velocity;
         this.acceleration = acceleration;
@@ -218,7 +218,7 @@ export class ThirdPersonController {
         
         // rotate the camera and then the whole player
         this.rotation = [ 0.7, -0.7, 0, 0 ]
-        this.rotation2 = [ 0, 0, -0.7, 0.7 ]
+        this.rotation2 = quat.rotateZ(quat.create(),quat.create(),-Math.PI/2)
         quat.rotateX(this.rotation, this.rotation, this.pitch);
         quat.rotateX(this.rotation2, this.rotation2, this.yaw)
         console.log(this.pitch);
