@@ -84,7 +84,6 @@ export class EnemyController {
             if(this.timer >= this.cooldown && this.distance < this.range){
                 this.timer %= this.cooldown
                 this.stats.health -= this.damage
-                
             }
 
         }

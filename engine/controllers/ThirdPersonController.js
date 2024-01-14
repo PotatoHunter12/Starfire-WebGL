@@ -95,6 +95,7 @@ export class ThirdPersonController {
         const forward = [-sin, 0, cos];
         const right = [-cos, 0, -sin];
 
+        this.maxSpeed = 20
         // Map user input to the acceleration vector.
         const acc = vec3.create();
         if (this.keys['KeyW'] || this.keys['ArrowUp']) {
@@ -113,13 +114,29 @@ export class ThirdPersonController {
             this.maxSpeed = 5
         }
         if(this.keys['KeyM'] && !this.locked['KeyM']){
-            this.view *= this.view == 5000 ? 0.01 : 10
+            this.view *= this.view >= 2000 ? 0.01 : 10
             this.locked['KeyM'] = true
         }
         if(this.clicked){
             this.attackEnemy()
             this.clicked = false
         }
+
+        // detecting collisions with trees
+        this.scene.children.forEach(child => {
+            if(child.name.includes("tree") || child.name.includes("skala")){
+                const a = transform.translation
+                const b = child.getComponentOfType(Transform).translation
+                const hm = a
+                const distance = Math.sqrt(Math.pow(a[0]-b[0],2)+Math.pow(a[2]-b[2],2))
+                if(distance<3){
+                    vec3.scale(acc,acc,-20)
+                    this.maxSpeed = 10
+                }
+                    
+            }
+                
+        });
         // Update velocity based on acceleration.
         vec3.scaleAndAdd(this.velocity, this.velocity, acc, dt * this.acceleration);
         
@@ -134,10 +151,6 @@ export class ThirdPersonController {
             this.velocity[2] *= decay
         }
         
-
-        if (!this.keys['ShiftLeft']){
-            this.maxSpeed = 20
-        }
 
         // Limit speed to prevent accelerating to infinity and beyond.
         const speed = vec3.length(this.velocity);

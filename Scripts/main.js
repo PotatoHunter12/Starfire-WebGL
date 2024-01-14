@@ -39,6 +39,7 @@ const camera = await playerScene.find(node => node.getComponentOfType(Camera));
 player.addComponent(new ThirdPersonController(player, enemies, scene, camera, canvas));
 scene.addChild(player)
 
+
 const enemyLoader = new GLTFLoader()
 await enemyLoader.load('../Assets/Models/monsters/ghost_walking.gltf')
 const enemy = await enemyLoader.loadNode("ghost")
@@ -63,7 +64,7 @@ function update(time, dt) {
     if (player.getComponentOfType(ThirdPersonController).health > 0){
 
         // spawn additional enemies
-        spawn(Math.floor(stats.kills/5)+10-enemies.length)
+        spawn(Math.floor(stats.kills/5)+0-enemies.length)
 
         //update scene
         scene.traverse(node => {
